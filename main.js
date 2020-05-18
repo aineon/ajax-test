@@ -24,17 +24,23 @@ function getTableHeaders(obj) {
 }
 
 function writeToDocument(type) {
+    let tableRows = [];
     let el = document.getElementById("data");
     el.innerHTML = "";
     getData(type, function(data) {
-         data = data.results;
-        let tableHeaders = getTableHeaders(data[0]);
+         data = data.results; //retrieves our data
+        let tableHeaders = getTableHeaders(data[0]); //calls the get tableHeaders function
 
          data.forEach(function(item) {
-        //el.innerHTML += "<p>" + item.name + "</p>";
+           let dataRow = [];
+           
+           Object.keys(item).forEach(function(key) {
+               dataRow.push(`<td>${item[key]}</td>`);
+           });
+           tableRows.push(dataRow);
          }); 
 
-         el.innerHTML = `<table>${tableHeaders}</table>`;
+         el.innerHTML = `<table>${tableHeaders}${tableRows}</table>`;
     });
 }
 
